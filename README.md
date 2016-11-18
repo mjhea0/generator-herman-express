@@ -1,5 +1,8 @@
 # generator-herman-express
 
+[![npm version](https://badge.fury.io/js/herman-express.svg)](https://badge.fury.io/js/herman-express)
+
+
 [Yeoman](http://yeoman.io) generator for a basic Node/Express boilerplate.
 
 ## Install
