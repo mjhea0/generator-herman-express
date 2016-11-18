@@ -1,4 +1,4 @@
-# herman-express
+# generator-herman-express
 
 [Yeoman](http://yeoman.io) generator for a basic Node/Express boilerplate.
 
@@ -14,13 +14,10 @@
 
 ## Run
 
-1. `gulp`
+`gulp`
 
 ## Test
 
-1. `npm test`
+`npm test`
 
 ## Todo
-
-1. Update dependency versions in package.json
-1. Add code coverage
