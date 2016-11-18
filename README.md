@@ -1,11 +1,10 @@
 # generator-herman-express
 
-[![npm version](https://badge.fury.io/js/herman-express.svg)](https://badge.fury.io/js/herman-express)
-
+[![npm version](https://badge.fury.io/js/generator-herman-express.svg)](https://badge.fury.io/js/generator-herman-express)
 
 [Yeoman](http://yeoman.io) generator for a basic Node/Express boilerplate.
 
-## Install
+### Install
 
 1. Install [Yeoman](http://yeoman.io) (if necessary) - `npm install -g yo`
 1. Install [Gulp](http://gulpjs.com/) (if necessary) - `npm install -g gulp`
@@ -19,8 +18,6 @@
 
 `gulp`
 
-## Test
+### Test
 
 `npm test`
-
-## Todo
