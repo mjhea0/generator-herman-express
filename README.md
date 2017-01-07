@@ -8,7 +8,7 @@
 
 1. Install [Yeoman](http://yeoman.io) (if necessary) - `npm install -g yo`
 1. Install [Gulp](http://gulpjs.com/) (if necessary) - `npm install -g gulp`
-1. Install the generator - `npm install -g herman-express`
+1. Install the generator - `npm install -g generator-herman-express`
 1. Run - `yo herman-express` and then `npm install`
 1. Create the necessary databases
 
