@@ -2,49 +2,131 @@
 
   'use strict';
 
+
+  // *** dependencies *** //
+
   const path = require('path');
   const gulp = require('gulp');
-  const eslint = require('gulp-eslint');
-  const excludeGitignore = require('gulp-exclude-gitignore');
-  const mocha = require('gulp-mocha');
-  const istanbul = require('gulp-istanbul');
-  const nsp = require('gulp-nsp');
+  const jshint = require('gulp-jshint');
+  const jscs = require('gulp-jscs');
+  const runSequence = require('run-sequence');
+  const nodemon = require('gulp-nodemon');
   const plumber = require('gulp-plumber');
+  const server = require('tiny-lr')();
+  const prefix = require('gulp-autoprefixer');
+  const cleanCSS = require('gulp-clean-css');
+  const rename = require('gulp-rename');
+  const concat = require('gulp-concat');
+  const uglify = require('gulp-uglify');
 
-  gulp.task('static', () => {
-    return gulp.src('**/*.js')
-    .pipe(excludeGitignore())
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError());
+  // *** config *** //
+
+  const paths = {
+    scripts: [
+      path.join('src', '**', '*.js'),
+      path.join('src', '*.js')
+    ],
+    styles: [
+      path.join('src', 'client', 'css', '*.css')
+    ],
+    views: [
+      path.join('src', 'server', '**', '*.html'),
+      path.join('src', 'server', '*.html')
+    ],
+    server: path.join('src', 'server', 'server.js')
+  };
+
+  const lrPort = 35729;
+
+  const nodemonConfig = {
+    script: paths.server,
+    ext: 'html js css',
+    ignore: ['node_modules'],
+    env: {
+      NODE_ENV: 'development'
+    }
+  };
+
+  // *** default task *** //
+
+  gulp.task('default', () => {
+    runSequence(
+      ['jshint'],
+      ['jscs'],
+      ['lr'],
+      ['nodemon'],
+      ['watch']
+    );
   });
 
-  gulp.task('nsp', (cb) => {
-    nsp({package: path.resolve('package.json')}, cb);
+  // *** build task *** //
+
+  gulp.task('build', () => {
+    runSequence(
+      ['minify-css'],
+      ['minify-js']
+    );
   });
 
-  gulp.task('pre-test', () => {
-    return gulp.src('generators/**/*.js')
-    .pipe(excludeGitignore())
-    .pipe(istanbul({includeUntested: true}))
-    .pipe(istanbul.hookRequire());
-  });
+  // *** sub tasks ** //
 
-  gulp.task('test', ['pre-test'], (cb) => {
-    let mochaErr;
-    gulp.src('test/**/*.js')
+  gulp.task('jshint', () => {
+    return gulp.src(paths.scripts)
     .pipe(plumber())
-    .pipe(mocha({reporter: 'spec'}))
-    .on('error', (err) => { mochaErr = err; })
-    .pipe(istanbul.writeReports())
-    .on('end', () => { cb(mochaErr); });
+    .pipe(jshint({ esnext: true }))
+    .pipe(jshint.reporter('jshint-stylish'))
+    .pipe(jshint.reporter('fail'));
+  });
+
+  gulp.task('jscs', () => {
+    return gulp.src(paths.scripts)
+    .pipe(plumber())
+    .pipe(jscs())
+    .pipe(jscs.reporter())
+    .pipe(jscs.reporter('fail'));
+  });
+
+  gulp.task('styles', () => {
+    return gulp.src(paths.styles)
+    .pipe(plumber());
+  });
+
+  gulp.task('views', () => {
+    return gulp.src(paths.views)
+    .pipe(plumber());
+  });
+
+  gulp.task('lr', () => {
+    server.listen(lrPort, (err) => {
+      if (err) return console.error(err);
+    });
+  });
+
+  gulp.task('nodemon', () => {
+    return nodemon(nodemonConfig);
   });
 
   gulp.task('watch', () => {
-    gulp.watch(['generators/**/*.js', 'test/**'], ['test']);
+    gulp.watch(paths.views, ['views']);
+    gulp.watch(paths.scripts, ['jshint', 'jscs']);
+    gulp.watch(paths.styles, ['styles']);
   });
 
-  gulp.task('prepublish', ['nsp']);
-  gulp.task('default', ['static', 'test']);
+  gulp.task('minify-css', () => {
+    gulp.src(paths.styles)
+    .pipe(plumber())
+    .pipe(concat('main.min.css'))
+    .pipe(prefix({ cascade: true }))
+    .pipe(cleanCSS({ debug: true }))
+    .pipe(gulp.dest(path.join('src', 'client', 'css', 'dist')));
+  });
+
+  gulp.task('minify-js', () => {
+    gulp.src(path.join('src', 'client', 'js', '*.js'))
+    .pipe(plumber())
+    .pipe(concat('main.min.js'))
+    .pipe(uglify())
+    .pipe(gulp.dest(path.join('src', 'client', 'js', 'dist')));
+  });
 
 }());

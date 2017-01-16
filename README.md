@@ -1,23 +1,36 @@
-# generator-herman-express
+# Herman Express Generator
 
-[![npm version](https://badge.fury.io/js/generator-herman-express.svg)](https://badge.fury.io/js/generator-herman-express)
+Just a Node/Express boilerplate, featuring:
 
-[Yeoman](http://yeoman.io) generator for a basic Node/Express boilerplate.
+1. Component-based Structure
+1. Server-side Templating
+1. Local Auth
+1. Knex query builder
+1. Flash Messages
+1. Tests
+  - Unit
+  - Integration
+  - Memory Leaks
 
-### Install
+## New Component?
 
-1. Install [Yeoman](http://yeoman.io) (if necessary) - `npm install -g yo`
-1. Install [Gulp](http://gulpjs.com/) (if necessary) - `npm install -g gulp`
-1. Install the generator - `npm install -g generator-herman-express`
-1. Run - `yo herman-express` and then `npm install`
-1. Create the necessary databases
+Steps for setting up a new component:
 
-> All files must be placed in the "src" directory!
+1. Add a new component directory
+1. Add the route to *src/server/routes.js* & *src/server/config/route-config.js*
+1. Add tests
+1. Add the new views to the config in *src/server/config/main-config.js*
 
-## Run
+## Heroku Deploy
 
-`gulp`
+1. Add Nodemailer
+1. Create build
 
-### Test
+## Todo
 
-`npm test`
+1. integration test for /users
+1. https://github.com/realpython/members
+1. csrf
+1. airbnb linter
+1. auth
+1. flash messaging
