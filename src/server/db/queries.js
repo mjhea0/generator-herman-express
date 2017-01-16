@@ -11,16 +11,21 @@
     .returning('*');
   }
 
+  function getSingleUserByUsername(username) {
+    return knex('users')
+    .where({ username: username })
+    .first();
+  }
+
   function getSingleUserByID(id) {
     return knex('users')
-    .where({
-      id: parseInt(id)
-    })
+    .where({ id: parseInt(id) })
     .first();
   }
 
   module.exports = {
     addUser,
+    getSingleUserByUsername,
     getSingleUserByID
   };
 

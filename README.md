@@ -17,7 +17,7 @@ Just a Node/Express boilerplate, featuring:
 Steps for setting up a new component:
 
 1. Add a new component directory
-1. Add the route to *src/server/routes.js* & *src/server/config/route-config.js*
+1. Add the route to *src/server/routes.js*
 1. Add tests
 1. Add the new views to the config in *src/server/config/main-config.js*
 
@@ -28,7 +28,7 @@ Steps for setting up a new component:
 
 ## Todo
 
-1. integration test for /users
+1. add signup route
 1. https://github.com/realpython/members
 1. csrf
 1. airbnb linter

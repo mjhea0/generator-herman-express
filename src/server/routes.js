@@ -15,8 +15,8 @@
 
   // *** users routes *** //
   router.get('/users', helpers.ensureAuthenticated, userController.users);
-  router.get('/login', helpers.loginRedirect, userController.getLogin);
-  router.post('/login', helpers.loginRedirect, userController.postLogin);
+  router.get('/users/login', helpers.loginRedirect, userController.getLogin);
+  router.post('/users/login', helpers.loginRedirect, userController.postLogin);
 
   // *** public *** //
   module.exports = router;

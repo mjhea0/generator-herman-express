@@ -12,7 +12,7 @@
   const helpers = require('../../src/server/auth/helpers');
 
   // *** tests *** //
-  describe.only('auth : helpers', () => {
+  describe('auth : helpers', () => {
 
     describe('createSalt()', () => {
       it('should return a salt', () => {

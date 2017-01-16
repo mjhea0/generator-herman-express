@@ -9,7 +9,6 @@
 
     // *** register routes *** //
     app.use('/', routes);
-    app.use('/users', routes);
 
   };
 
