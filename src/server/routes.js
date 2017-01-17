@@ -19,6 +19,7 @@
   router.post('/users/login', helpers.loginRedirect, userCtrl.postLogin);
   router.get('/users/register', helpers.loginRedirect, userCtrl.getRegister);
   router.post('/users/register', helpers.loginRedirect, userCtrl.postRegister);
+  router.get('/users/logout', helpers.ensureAuthenticated, userCtrl.logout);
 
   // *** public *** //
   module.exports = router;

@@ -28,7 +28,8 @@ Steps for setting up a new component:
 
 ## Todo
 
-1. add username to users page, update tests
+1. update nav bar - show/hide base on user logged in
+1. regstering with duplicate username
 1. github oauth
 1. update https://github.com/mjhea0/passport-local-knex/pull/2
 1. https://github.com/realpython/members

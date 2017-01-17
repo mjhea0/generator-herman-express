@@ -205,7 +205,38 @@
           done();
         });
       });
+    });
 
+    describe('GET /logout', () => {
+      it('should redirect to `/` if user is authenticated', () => {
+        return queries.getSingleUserByUsername('michael')
+        .then((user) => {
+          passportStub.login(user);
+          chai.request(server)
+          .get('/users/logout')
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
+        });
+      });
+      it('should redirect to the login page if not authenticated', (done) => {
+        chai.request(server)
+        .get('/users/logout')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.redirects.length.should.eql(1);
+          res.redirects[0].should.contain('/users/login');
+          res.status.should.eql(200);
+          res.type.should.eql('text/html');
+          res.text.should.contain('<h1>Login</h1>');
+          done();
+        });
+      });
     });
 
   });

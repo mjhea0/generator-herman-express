@@ -71,13 +71,23 @@
     .catch((err) => { return next(err); });
   }
 
+  function logout(req, res, next) {
+    req.logout();
+    req.flash('messages', {
+      status: 'success',
+      value: 'You successfully logged out.'
+    });
+    res.redirect('/');
+  }
+
   // *** public *** //
   module.exports = {
     users,
     getLogin,
     postLogin,
     getRegister,
-    postRegister
+    postRegister,
+    logout
   };
 
 }());
