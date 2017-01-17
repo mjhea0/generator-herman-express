@@ -45,6 +45,22 @@
           done();
         });
       });
+      it('should redirect to `/` if user is already logged in', () => {
+        return queries.getSingleUserByUsername('michael')
+        .then((user) => {
+          passportStub.login(user);
+          chai.request(server)
+          .get('/users/login')
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
+        });
+      });
     });
 
     describe('POST /users/login', () => {
@@ -73,6 +89,87 @@
           res.type.should.eql('text/html');
           res.text.should.contain('<h1>Login</h1>');
           done();
+        });
+      });
+      it('should redirect to `/` if user is already logged in', () => {
+        return queries.getSingleUserByUsername('michael')
+        .then((user) => {
+          passportStub.login(user);
+          chai.request(server)
+          .post('/users/login')
+          .send({ username: 'incorrect', password: 'incorrect'})
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
+        });
+      });
+    });
+
+    describe('GET /users/register', () => {
+      it('should render the register page', (done) => {
+        chai.request(server)
+        .get('/users/register')
+        .end((err, res) => {
+          should.not.exist(err);
+          res.redirects.length.should.eql(0);
+          res.status.should.eql(200);
+          res.type.should.eql('text/html');
+          res.text.should.contain('<h1>Register</h1>');
+          done();
+        });
+      });
+      it('should redirect to `/` if user is already logged in', () => {
+        return queries.getSingleUserByUsername('michael')
+        .then((user) => {
+          passportStub.login(user);
+          chai.request(server)
+          .get('/users/register')
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
+        });
+      });
+    });
+
+    describe('POST /users/register', () => {
+      it('should redirect to the users page', (done) => {
+        chai.request(server)
+        .post('/users/register')
+        .send({ username: 'john', password: 'lamb'})
+        .end((err, res) => {
+          should.not.exist(err);
+          res.redirects.length.should.eql(2);
+          res.redirects[0].should.contain('/users');
+          res.status.should.eql(200);
+          res.type.should.eql('text/html');
+          done();
+        });
+      });
+      it('should redirect to `/` if user is already logged in', () => {
+        return queries.getSingleUserByUsername('michael')
+        .then((user) => {
+          passportStub.login(user);
+          chai.request(server)
+          .post('/users/register')
+          .send({ username: 'john', password: 'lamb'})
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
         });
       });
     });

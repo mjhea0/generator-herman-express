@@ -5,6 +5,7 @@
   // *** dependencies *** //
   const helpers = require('./users.helpers.js');
   const passport = require('../../auth/strategies/local');
+  const authHelpers = require('../../auth/helpers');
 
   // *** handlers *** //
 
@@ -46,11 +47,35 @@
     })(req, res, next);
   }
 
+  function getRegister(req, res, next) {
+    const renderObject = {};
+    renderObject.title = 'Register';
+    renderObject.messages = req.flash('messages');
+    res.render('Register', renderObject);
+  }
+
+  function postRegister(req, res, next) {
+    return authHelpers.createUser(req)
+    .then((user) => {
+      req.logIn(user[0], (err) => {
+        if (err) { return next(err); }
+        req.flash('messages', {
+          status: 'success',
+          value: 'Thanks for registering.'
+        });
+        return res.redirect('/users');
+      });
+    })
+    .catch((err) => { return next(err); });
+  }
+
   // *** public *** //
   module.exports = {
     users,
     getLogin,
-    postLogin
+    postLogin,
+    getRegister,
+    postRegister
   };
 
 }());

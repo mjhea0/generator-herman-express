@@ -28,9 +28,12 @@ Steps for setting up a new component:
 
 ## Todo
 
-1. add signup route
+1. add username to users page, update tests
+1. update https://github.com/mjhea0/passport-local-knex/pull/2
 1. https://github.com/realpython/members
 1. csrf
 1. airbnb linter
 1. auth
 1. flash messaging
+1. isoldate tests (unit vs integration for code coverage)
+1. validatior

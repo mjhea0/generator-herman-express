@@ -7,16 +7,18 @@
   const router = express.Router();
 
   const helpers = require('./auth/helpers');
-  const mainController = require('./components/main/main.controller');
-  const userController = require('./components/users/users.controller');
+  const mainCtrl = require('./components/main/main.controller');
+  const userCtrl = require('./components/users/users.controller');
 
   // *** main routes *** //
-  router.get('/', mainController.main);
+  router.get('/', mainCtrl.main);
 
   // *** users routes *** //
-  router.get('/users', helpers.ensureAuthenticated, userController.users);
-  router.get('/users/login', helpers.loginRedirect, userController.getLogin);
-  router.post('/users/login', helpers.loginRedirect, userController.postLogin);
+  router.get('/users', helpers.ensureAuthenticated, userCtrl.users);
+  router.get('/users/login', helpers.loginRedirect, userCtrl.getLogin);
+  router.post('/users/login', helpers.loginRedirect, userCtrl.postLogin);
+  router.get('/users/register', helpers.loginRedirect, userCtrl.getRegister);
+  router.post('/users/register', helpers.loginRedirect, userCtrl.postRegister);
 
   // *** public *** //
   module.exports = router;

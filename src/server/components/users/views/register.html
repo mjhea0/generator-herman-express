@@ -4,9 +4,18 @@
 
 {% block content %}
 
-  <div class="container">
-    <h1>{{title}}</h1>
-    <h2>The sum is {{sum}}</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <h1>{{title}}</h1>
+      <hr><br>
+      <form class="form-group" role="form" action="/users/register" method="post">
+        <input class="form-control form-group" type="text" name="username" placeholder="Enter Username">
+        <input class="form-control form-group" type="password" name="password" placeholder="Password">
+        <button class="btn btn-default" type="submit">Submit</button>
+        &nbsp;
+        <a href="/"><button class="btn btn-primary" type="button">Cancel</button></a>
+      </form>
+    </div>
   </div>
 
 {% endblock %}
