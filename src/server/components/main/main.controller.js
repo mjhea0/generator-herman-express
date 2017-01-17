@@ -11,6 +11,7 @@
     const renderObject = {};
     renderObject.title = 'Welcome to Express!';
     renderObject.messages = req.flash('messages');
+    renderObject.user = req.user;
     try {
       const num1 = req.query.num1 || 1;
       const num2 = req.query.num2 || 2;

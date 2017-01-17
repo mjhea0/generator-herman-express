@@ -21,6 +21,7 @@
     const renderObject = {};
     renderObject.title = 'Login';
     renderObject.messages = req.flash('messages');
+    renderObject.user = req.user;
     res.render('login', renderObject);
   }
 
@@ -51,6 +52,7 @@
     const renderObject = {};
     renderObject.title = 'Register';
     renderObject.messages = req.flash('messages');
+    renderObject.user = req.user;
     res.render('Register', renderObject);
   }
 

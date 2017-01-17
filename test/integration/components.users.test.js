@@ -187,6 +187,8 @@
             res.status.should.eql(200);
             res.type.should.eql('text/html');
             res.text.should.contain('<h1>Users</h1>');
+            res.text.should.contain(
+              `<p>Welcome, <strong>${user.username}</strong>!</p>`);
           });
         });
       });
