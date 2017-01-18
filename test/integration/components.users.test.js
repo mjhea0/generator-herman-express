@@ -172,6 +172,20 @@
           });
         });
       });
+      it('should error if the username is not unique', (done) => {
+        chai.request(server)
+        .post('/users/register')
+        .send({ username: 'michael', password: 'herman'})
+        .end((err, res) => {
+          should.exist(err);
+          res.redirects.length.should.eql(0);
+          res.status.should.eql(500);
+          res.type.should.eql('application/json');
+          res.body.status.should.eql(500);
+          res.body.detail.should.eql('error: insert into "users" ("password", "username") values ($1, $2) returning * - duplicate key value violates unique constraint "users_username_unique"');
+          done();
+        });
+      });
     });
 
     describe('GET /users', () => {

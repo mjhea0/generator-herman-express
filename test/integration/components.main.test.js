@@ -70,7 +70,7 @@
     });
 
     describe('GET /404', () => {
-      it('should throw an error', (done) => {
+      it('should error', (done) => {
         chai.request(server)
         .get('/404')
         .end((err, res) => {

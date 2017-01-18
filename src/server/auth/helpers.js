@@ -15,7 +15,7 @@
     .then((salt) => { return createHash(req.body.password, salt); })
     .then((hash) => { return queries.addUser(req.body.username, hash); })
     .then((user) => { return user; })
-    .catch((err) => { return err; });
+    .catch((err) => { throw Error(err); });
   }
 
   function createSalt(rounds) {

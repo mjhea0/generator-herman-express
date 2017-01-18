@@ -68,7 +68,9 @@
         return res.redirect('/users');
       });
     })
-    .catch((err) => { return next(err); });
+    .catch((err) => {
+      return next(err);
+    });
   }
 
   function logout(req, res, next) {
