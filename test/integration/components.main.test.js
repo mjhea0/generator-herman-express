@@ -30,6 +30,14 @@
           res.type.should.eql('text/html');
           res.text.should.contain('<h1>Welcome to Express!</h1>');
           res.text.should.contain('<h2>The sum is 3</h2>');
+          res.text.should.contain(
+            '<li><a href="/users/register">Register</a></li>');
+          res.text.should.contain(
+            '<li><a href="/users/login">Login</a></li>');
+          res.text.should.not.contain(
+            '<li><a href="/users">Users</a></li>');
+          res.text.should.not.contain(
+            '<li><a href="/users/logout">Logout</a></li>');
           done();
         });
       });

@@ -189,6 +189,14 @@
             res.text.should.contain('<h1>Users</h1>');
             res.text.should.contain(
               `<p>Welcome, <strong>${user.username}</strong>!</p>`);
+            res.text.should.not.contain(
+              '<li><a href="/users/register">Register</a></li>');
+            res.text.should.not.contain(
+              '<li><a href="/users/login">Login</a></li>');
+            res.text.should.contain(
+              '<li><a href="/users">Users</a></li>');
+            res.text.should.contain(
+              '<li><a href="/users/logout">Logout</a></li>');
           });
         });
       });
