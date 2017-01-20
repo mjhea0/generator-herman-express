@@ -44,6 +44,7 @@
     app.use(helmet());
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+
     app.use(expressValidator());
     app.use(cookieParser());
     app.use(session({

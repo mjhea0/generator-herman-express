@@ -14,6 +14,7 @@
   const knex = require('../../src/server/db/connection');
   const server = require('../../src/server/app');
   const queries = require('../../src/server/db/queries');
+  const helpers = require('../helpers.js');
 
   const passportStub = require('passport-stub');
   passportStub.install(server);
@@ -64,31 +65,43 @@
     });
 
     describe('POST /users/login', () => {
-      it('should redirect to the users page if username + password are correct', (done) => {
+      it('should redirect to the users page if username + password are correct and the CSRF token is correct', (done) => {
         chai.request(server)
-        .post('/users/login')
-        .send({ username: 'michael', password: 'herman'})
+        .get('/users/login')
         .end((err, res) => {
-          should.not.exist(err);
-          res.redirects.length.should.eql(2);
-          res.redirects[0].should.contain('/users');
-          res.status.should.eql(200);
-          res.type.should.eql('text/html');
-          done();
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/login')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: csrfToken, username: 'michael', password: 'herman'})
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(2);
+            res.redirects[0].should.contain('/users');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            done();
+          });
         });
       });
-      it('should redirect to the login page if username + password are incorrect', (done) => {
+      it('should redirect to the login page if username + password are incorrect and the CSRF token is correct', (done) => {
         chai.request(server)
-        .post('/users/login')
-        .send({ username: 'incorrect', password: 'incorrect'})
+        .get('/users/login')
         .end((err, res) => {
-          should.not.exist(err);
-          res.redirects.length.should.eql(1);
-          res.redirects[0].should.contain('/users/login');
-          res.status.should.eql(200);
-          res.type.should.eql('text/html');
-          res.text.should.contain('<h1>Login</h1>');
-          done();
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/login')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: csrfToken, username: 'incorrect', password: 'incorrect'})
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(1);
+            res.redirects[0].should.contain('/users/login');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            res.text.should.contain('<h1>Login</h1>');
+            done();
+          });
         });
       });
       it('should redirect to `/` if user is already logged in', () => {
@@ -105,6 +118,23 @@
             res.status.should.eql(200);
             res.type.should.eql('text/html');
             res.text.should.contain('<h1>Welcome to Express!</h1>');
+          });
+        });
+      });
+      it('should error if the CSRF token is incorrect', (done) => {
+        chai.request(server)
+        .get('/users/login')
+        .end((err, res) => {
+          chai.request(server)
+          .post('/users/login')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: 'invalid', username: 'michael', password: 'herman'})
+          .end((err, res) => {
+            should.exist(err);
+            res.redirects.length.should.eql(0);
+            res.status.should.eql(403);
+            res.body.error.should.eql('session has expired or tampered with');
+            done();
           });
         });
       });
@@ -142,17 +172,23 @@
     });
 
     describe('POST /users/register', () => {
-      it('should redirect to the users page', (done) => {
+      it('should redirect to the users page if the CSRF token is correct', (done) => {
         chai.request(server)
-        .post('/users/register')
-        .send({ username: 'john', password: 'lamb'})
+        .get('/users/login')
         .end((err, res) => {
-          should.not.exist(err);
-          res.redirects.length.should.eql(2);
-          res.redirects[0].should.contain('/users');
-          res.status.should.eql(200);
-          res.type.should.eql('text/html');
-          done();
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/register')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: csrfToken, username: 'john', password: 'lamb'})
+          .end((err, res) => {
+            should.not.exist(err);
+            res.redirects.length.should.eql(2);
+            res.redirects[0].should.contain('/users');
+            res.status.should.eql(200);
+            res.type.should.eql('text/html');
+            done();
+          });
         });
       });
       it('should redirect to `/` if user is already logged in', () => {
@@ -172,18 +208,41 @@
           });
         });
       });
-      it('should error if the username is not unique', (done) => {
+      it('should error if the username is not unique and the CSRF token is correct', (done) => {
         chai.request(server)
-        .post('/users/register')
-        .send({ username: 'michael', password: 'herman'})
+        .get('/users/login')
         .end((err, res) => {
-          should.exist(err);
-          res.redirects.length.should.eql(0);
-          res.status.should.eql(500);
-          res.type.should.eql('application/json');
-          res.body.status.should.eql(500);
-          res.body.detail.should.eql('error: insert into "users" ("password", "username") values ($1, $2) returning * - duplicate key value violates unique constraint "users_username_unique"');
-          done();
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/register')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: csrfToken, username: 'michael', password: 'herman'})
+          .end((err, res) => {
+            should.exist(err);
+            res.redirects.length.should.eql(0);
+            res.status.should.eql(500);
+            res.type.should.eql('application/json');
+            res.body.status.should.eql(500);
+            res.body.detail.should.eql('error: insert into "users" ("password", "username") values ($1, $2) returning * - duplicate key value violates unique constraint "users_username_unique"');
+            done();
+          });
+        });
+      });
+      it('should error if the CSRF token is incorrect', (done) => {
+        chai.request(server)
+        .get('/users/register')
+        .end((err, res) => {
+          chai.request(server)
+          .post('/users/register')
+          .set('cookie', res.headers['set-cookie'])
+          .send({_csrf: 'invalid', username: 'michael', password: 'herman'})
+          .end((err, res) => {
+            should.exist(err);
+            res.redirects.length.should.eql(0);
+            res.status.should.eql(403);
+            res.body.error.should.eql('session has expired or tampered with');
+            done();
+          });
         });
       });
     });

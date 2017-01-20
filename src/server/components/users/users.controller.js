@@ -22,6 +22,7 @@
     renderObject.title = 'Login';
     renderObject.messages = req.flash('messages');
     renderObject.user = req.user;
+    renderObject.csrf = req.csrfToken();
     res.render('login', renderObject);
   }
 
@@ -53,6 +54,7 @@
     renderObject.title = 'Register';
     renderObject.messages = req.flash('messages');
     renderObject.user = req.user;
+    renderObject.csrf = req.csrfToken();
     res.render('Register', renderObject);
   }
 

@@ -20,6 +20,14 @@
       next(err);
     });
 
+    // handle csrf errors specifically
+    app.use(function(err, req, res, next) {
+      if (err.code !== 'EBADCSRFTOKEN') return next(err);
+      res.status(403).json({
+        error: 'session has expired or tampered with'
+      });
+    });
+
     // development error handler (will print stacktrace)
     if (app.get('env') === 'development') {
       app.use((err, req, res, next) => {

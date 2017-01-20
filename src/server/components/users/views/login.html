@@ -9,6 +9,7 @@
       <h1>{{title}}</h1>
       <hr><br>
       <form class="form-group" role="form" action="/users/login" method="post">
+        <input type="hidden" name="_csrf" value="{{csrf}}">
         <input class="form-control form-group" type="text" name="username" placeholder="Enter Username">
         <input class="form-control form-group" type="password" name="password" placeholder="Password">
         <button class="btn btn-default" type="submit">Submit</button>
