@@ -11,6 +11,31 @@ Just a Node/Express boilerplate, featuring:
   - Unit
   - Integration
   - Memory Leaks
+1. Security
+  - Helmet
+  - CSRF
+
+## Test
+
+All tests:
+
+```sh
+$ npm test
+```
+
+Leakage tests:
+
+```sh
+$ npm run leaks
+```
+
+Coverage:
+
+```sh
+$ npm run coverage
+$ npm run coverage-unit
+$ npm run coverage-integration
+```
 
 ## New Component?
 
@@ -25,11 +50,11 @@ Steps for setting up a new component:
 
 1. Add Nodemailer
 1. Create build
+1. PM2
 
 ## Todo
 
-1. update https://github.com/mjhea0/passport-local-knex/pull/2
 1. https://github.com/realpython/members
 1. airbnb linter
-1. isoldate tests (unit vs integration for code coverage)
 1. validatior
+1. update memory leak tests

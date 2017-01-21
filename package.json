@@ -5,7 +5,9 @@
     "start": "node ./src/server/server",
     "test": "./node_modules/mocha/bin/_mocha ./test/**/*.test.js -b",
     "leaks": "./node_modules/mocha/bin/_mocha ./test/leak.tests.js -b --timeout 5000",
-    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha ./test/**/*.test.js"
+    "coverage": "istanbul cover ./node_modules/mocha/bin/_mocha ./test/**/*.test.js",
+    "coverage-unit": "istanbul cover ./node_modules/mocha/bin/_mocha ./test/unit/*.test.js",
+    "coverage-integration": "istanbul cover ./node_modules/mocha/bin/_mocha ./test/integration/*.test.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.0",
