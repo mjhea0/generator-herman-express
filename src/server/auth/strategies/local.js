@@ -1,13 +1,12 @@
-(function() {
-
-  'use strict';
+(() => {
 
   const passport = require('passport');
   const LocalStrategy = require('passport-local').Strategy;
 
   const knex = require('../../db/connection');
   const authHelpers = require('../helpers');
-  const init = require('../init')();
+
+  require('../init')();
 
   const options = {};
 
@@ -22,12 +21,12 @@
       return authHelpers.comparePass(password, self.user.password);
     })
     .then((res) => {
-      if (res) return done(null, self.user);
-      else return done(null, false);
+      if (res) { return done(null, self.user); }
+      return done(null, false);
     })
     .catch((err) => { return done(err); });
   }));
 
   module.exports = passport;
 
-}());
+})();

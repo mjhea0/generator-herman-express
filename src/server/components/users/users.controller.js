@@ -1,15 +1,12 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** dependencies *** //
-  const helpers = require('./users.helpers.js');
   const passport = require('../../auth/strategies/local');
   const authHelpers = require('../../auth/helpers');
 
   // *** handlers *** //
 
-  function users(req, res, next) {
+  function users(req, res) {
     const renderObject = {};
     renderObject.title = 'Users';
     renderObject.messages = req.flash('messages');
@@ -17,7 +14,7 @@
     res.render('users', renderObject);
   }
 
-  function getLogin(req, res, next) {
+  function getLogin(req, res) {
     const renderObject = {};
     renderObject.title = 'Login';
     renderObject.messages = req.flash('messages');
@@ -27,29 +24,31 @@
   }
 
   function postLogin(req, res, next) {
-    passport.authenticate('local', (err, user, info) => {
+    /* eslint-disable consistent-return */
+    passport.authenticate('local', (err, user) => {
       if (err) { return next(err); }
       if (!user) {
         req.flash('messages', {
           status: 'danger',
-          value: 'Sorry. That username and/or password is incorrect.'
+          value: 'Sorry. That username and/or password is incorrect.',
         });
         return res.redirect('/users/login');
       }
       if (user) {
-        req.logIn(user, (err) => {
-          if (err) { return next(err); }
+        req.logIn(user, (error) => {
+          if (error) { return next(error); }
           req.flash('messages', {
             status: 'success',
-            value: 'Thanks for logging in.'
+            value: 'Thanks for logging in.',
           });
           return res.redirect('/users');
         });
       }
     })(req, res, next);
+    /* eslint-enable consistent-return */
   }
 
-  function getRegister(req, res, next) {
+  function getRegister(req, res) {
     const renderObject = {};
     renderObject.title = 'Register';
     renderObject.messages = req.flash('messages');
@@ -65,21 +64,19 @@
         if (err) { return next(err); }
         req.flash('messages', {
           status: 'success',
-          value: 'Thanks for registering.'
+          value: 'Thanks for registering.',
         });
         return res.redirect('/users');
       });
     })
-    .catch((err) => {
-      return next(err);
-    });
+    .catch((err) => { return next(err); });
   }
 
-  function logout(req, res, next) {
+  function logout(req, res) {
     req.logout();
     req.flash('messages', {
       status: 'success',
-      value: 'You successfully logged out.'
+      value: 'You successfully logged out.',
     });
     res.redirect('/');
   }
@@ -91,7 +88,7 @@
     postLogin,
     getRegister,
     postRegister,
-    logout
+    logout,
   };
 
-}());
+})();

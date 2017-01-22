@@ -1,6 +1,4 @@
-(function(appConfig) {
-
-  'use strict';
+((appConfig) => {
 
   // *** main dependencies *** //
   const path = require('path');
@@ -20,18 +18,18 @@
   const viewFolders = [
     path.join(__dirname, '..', 'views'),
     path.join(__dirname, '..', 'components', 'main'),
-    path.join(__dirname, '..', 'components', 'users', 'views')
+    path.join(__dirname, '..', 'components', 'users', 'views'),
   ];
 
   // *** load environment variables *** //
   require('dotenv').config();
 
-  appConfig.init = function(app, express) {
+  appConfig.init = (app, express) => { // eslint-disable-line no-param-reassign
 
     // *** view engine *** //
     nunjucks.configure(viewFolders, {
       express: app,
-      autoescape: true
+      autoescape: true,
     });
     app.set('view engine', 'html');
 
@@ -50,7 +48,7 @@
     app.use(session({
       secret: process.env.SECRET_KEY,
       resave: false,
-      saveUninitialized: true
+      saveUninitialized: true,
     }));
     app.use(flash());
     app.use(passport.initialize());

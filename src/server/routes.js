@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** dependencies *** //
   const express = require('express');
@@ -28,4 +26,4 @@
   // *** public *** //
   module.exports = router;
 
-}());
+})();

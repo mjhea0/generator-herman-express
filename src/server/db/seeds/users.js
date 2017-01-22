@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   const bcrypt = require('bcryptjs');
 
@@ -12,10 +10,10 @@
       return Promise.join(
         knex('users').insert({
           username: 'michael',
-          password: hash
-        })
+          password: hash,
+        })     // eslint-disable-line comma-dangle
       );
     });
   };
 
-}());
+})();

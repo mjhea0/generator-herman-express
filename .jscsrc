@@ -23,7 +23,7 @@
   ],
   "disallowMixedSpacesAndTabs": true,
   "disallowTrailingWhitespace": true,
-  "disallowTrailingComma": true,
+  "disallowTrailingComma": false,
   "disallowKeywords": [ "with" ],
   "disallowMultipleLineBreaks": true,
   "requireSpaceBeforeBlockStatements": true,

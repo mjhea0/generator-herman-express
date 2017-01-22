@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** dependencies *** //
 
@@ -9,14 +7,6 @@
   const queries = require('../db/queries');
 
   // *** helpers *** //
-
-  function createUser(req) {
-    return createSalt(10)
-    .then((salt) => { return createHash(req.body.password, salt); })
-    .then((hash) => { return queries.addUser(req.body.username, hash); })
-    .then((user) => { return user; })
-    .catch((err) => { throw Error(err); });
-  }
 
   function createSalt(rounds) {
     return new Promise((resolve, reject) => {
@@ -36,6 +26,14 @@
     });
   }
 
+  function createUser(req) {
+    return createSalt(10)
+    .then((salt) => { return createHash(req.body.password, salt); })
+    .then((hash) => { return queries.addUser(req.body.username, hash); })
+    .then((user) => { return user; })
+    .catch((err) => { throw Error(err); });
+  }
+
   function comparePass(userPassword, databasePassword) {
     return new Promise((resolve, reject) => {
       bcrypt.compare(userPassword, databasePassword, (err, res) => {
@@ -53,23 +51,19 @@
 
   function ensureAuthenticated(req, res, next) {
     if (req.user) {
-      const userID = parseInt(req.user.id);
+      const userID = parseInt(req.user.id, 10);
       return queries.getSingleUserByID(userID)
       .then((user) => {
-        if (user && parseInt(user.id) === userID) {
-          return next();
-        } else {
-          return next('Sorry. That username and/or password is incorrect.');
-        }
+        if (user && parseInt(user.id, 10) === userID) { return next(); }
+        return next('Sorry. That username and/or password is incorrect.');
       })
       .catch((err) => { return next(err); });
-    } else {
-      req.flash('messages', {
-        status: 'danger',
-        value: 'You need to log in before continuing.'
-      });
-      return res.redirect('/users/login');
     }
+    req.flash('messages', {
+      status: 'danger',
+      value: 'You need to log in before continuing.',
+    });
+    return res.redirect('/users/login');
   }
 
   // *** public *** //
@@ -79,7 +73,7 @@
     createHash,
     comparePass,
     loginRedirect,
-    ensureAuthenticated
+    ensureAuthenticated,
   };
 
-}());
+})();

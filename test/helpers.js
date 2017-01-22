@@ -6,5 +6,5 @@ function extractCsrfToken(res) {
 }
 
 module.exports = {
-  extractCsrfToken
+  extractCsrfToken,
 };

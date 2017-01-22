@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** set environment *** //
   process.env.NODE_ENV = 'test';
@@ -58,8 +56,8 @@
           return helpers.createHash('test123', salt)
           .then((hash) => {
             return helpers.comparePass('test123', hash)
-            .then((res) => { res.should.eql(true); } )
-            .catch((err) => { should.not.exist(err); } );
+            .then((res) => { res.should.eql(true); })
+            .catch((err) => { should.not.exist(err); });
           })
           .catch((err) => { should.not.exist(err); });
         });
@@ -71,8 +69,8 @@
           return helpers.createHash('test123', salt)
           .then((hash) => {
             return helpers.comparePass('test456', hash)
-            .then((res) => { res.should.eql(false); } )
-            .catch((err) => { should.not.exist(err); } );
+            .then((res) => { res.should.eql(false); })
+            .catch((err) => { should.not.exist(err); });
           })
           .catch((err) => { should.not.exist(err); });
         });
@@ -89,4 +87,4 @@
 
   });
 
-}());
+})();

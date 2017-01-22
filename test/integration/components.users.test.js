@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** set environment *** //
   process.env.NODE_ENV = 'test';
@@ -73,13 +71,13 @@
           chai.request(server)
           .post('/users/login')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: csrfToken, username: 'michael', password: 'herman'})
-          .end((err, res) => {
-            should.not.exist(err);
-            res.redirects.length.should.eql(2);
-            res.redirects[0].should.contain('/users');
-            res.status.should.eql(200);
-            res.type.should.eql('text/html');
+          .send({ _csrf: csrfToken, username: 'michael', password: 'herman' })
+          .end((error, response) => {
+            should.not.exist(error);
+            response.redirects.length.should.eql(2);
+            response.redirects[0].should.contain('/users');
+            response.status.should.eql(200);
+            response.type.should.eql('text/html');
             done();
           });
         });
@@ -92,14 +90,14 @@
           chai.request(server)
           .post('/users/login')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: csrfToken, username: 'incorrect', password: 'incorrect'})
-          .end((err, res) => {
-            should.not.exist(err);
-            res.redirects.length.should.eql(1);
-            res.redirects[0].should.contain('/users/login');
-            res.status.should.eql(200);
-            res.type.should.eql('text/html');
-            res.text.should.contain('<h1>Login</h1>');
+          .send({ _csrf: csrfToken, username: 'null', password: 'incorrect' })
+          .end((error, response) => {
+            should.not.exist(error);
+            response.redirects.length.should.eql(1);
+            response.redirects[0].should.contain('/users/login');
+            response.status.should.eql(200);
+            response.type.should.eql('text/html');
+            response.text.should.contain('<h1>Login</h1>');
             done();
           });
         });
@@ -110,7 +108,7 @@
           passportStub.login(user);
           chai.request(server)
           .post('/users/login')
-          .send({ username: 'incorrect', password: 'incorrect'})
+          .send({ username: 'incorrect', password: 'incorrect' })
           .end((err, res) => {
             should.not.exist(err);
             res.redirects.length.should.eql(1);
@@ -128,12 +126,12 @@
           chai.request(server)
           .post('/users/login')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: 'invalid', username: 'michael', password: 'herman'})
-          .end((err, res) => {
-            should.exist(err);
-            res.redirects.length.should.eql(0);
-            res.status.should.eql(403);
-            res.body.error.should.eql('session has expired or tampered with');
+          .send({ _csrf: 'invalid', username: 'michael', password: 'herman' })
+          .end((error, response) => {
+            should.exist(error);
+            response.redirects.length.should.eql(0);
+            response.status.should.eql(403);
+            response.body.error.should.eql('session has expired or tampered with');
             done();
           });
         });
@@ -180,13 +178,13 @@
           chai.request(server)
           .post('/users/register')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: csrfToken, username: 'john', password: 'lamb'})
-          .end((err, res) => {
-            should.not.exist(err);
-            res.redirects.length.should.eql(2);
-            res.redirects[0].should.contain('/users');
-            res.status.should.eql(200);
-            res.type.should.eql('text/html');
+          .send({ _csrf: csrfToken, username: 'john', password: 'lamb' })
+          .end((error, response) => {
+            should.not.exist(error);
+            response.redirects.length.should.eql(2);
+            response.redirects[0].should.contain('/users');
+            response.status.should.eql(200);
+            response.type.should.eql('text/html');
             done();
           });
         });
@@ -197,7 +195,7 @@
           passportStub.login(user);
           chai.request(server)
           .post('/users/register')
-          .send({ username: 'john', password: 'lamb'})
+          .send({ username: 'john', password: 'lamb' })
           .end((err, res) => {
             should.not.exist(err);
             res.redirects.length.should.eql(1);
@@ -216,14 +214,14 @@
           chai.request(server)
           .post('/users/register')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: csrfToken, username: 'michael', password: 'herman'})
-          .end((err, res) => {
-            should.exist(err);
-            res.redirects.length.should.eql(0);
-            res.status.should.eql(500);
-            res.type.should.eql('application/json');
-            res.body.status.should.eql(500);
-            res.body.detail.should.eql('error: insert into "users" ("password", "username") values ($1, $2) returning * - duplicate key value violates unique constraint "users_username_unique"');
+          .send({ _csrf: csrfToken, username: 'michael', password: 'herman' })
+          .end((error, response) => {
+            should.exist(error);
+            response.redirects.length.should.eql(0);
+            response.status.should.eql(500);
+            response.type.should.eql('application/json');
+            response.body.status.should.eql(500);
+            response.body.detail.should.eql('error: insert into "users" ("password", "username") values ($1, $2) returning * - duplicate key value violates unique constraint "users_username_unique"');
             done();
           });
         });
@@ -235,12 +233,12 @@
           chai.request(server)
           .post('/users/register')
           .set('cookie', res.headers['set-cookie'])
-          .send({_csrf: 'invalid', username: 'michael', password: 'herman'})
-          .end((err, res) => {
-            should.exist(err);
-            res.redirects.length.should.eql(0);
-            res.status.should.eql(403);
-            res.body.error.should.eql('session has expired or tampered with');
+          .send({ _csrf: 'invalid', username: 'michael', password: 'herman' })
+          .end((error, response) => {
+            should.exist(error);
+            response.redirects.length.should.eql(0);
+            response.status.should.eql(403);
+            response.body.error.should.eql('session has expired or tampered with');
             done();
           });
         });
@@ -322,4 +320,4 @@
 
   });
 
-}());
+})();

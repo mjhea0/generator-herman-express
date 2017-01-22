@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** dependencies *** //
   const helpers = require('./main.helpers.js');
@@ -17,7 +15,7 @@
       const num2 = req.query.num2 || 2;
       const total = helpers.sumSync(num1, num2);
       renderObject.sum = total;
-      res.render('main', renderObject);
+      return res.render('main', renderObject);
     } catch (e) {
       return next(e);
     }
@@ -25,7 +23,7 @@
 
   // *** public *** //
   module.exports = {
-    main
+    main,
   };
 
-}());
+})();

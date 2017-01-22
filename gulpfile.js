@@ -1,13 +1,11 @@
-(function() {
+(() => {
 
   'use strict';
-
 
   // *** dependencies *** //
 
   const path = require('path');
   const gulp = require('gulp');
-  const jshint = require('gulp-jshint');
   const jscs = require('gulp-jscs');
   const runSequence = require('run-sequence');
   const nodemon = require('gulp-nodemon');
@@ -18,6 +16,7 @@
   const rename = require('gulp-rename');
   const concat = require('gulp-concat');
   const uglify = require('gulp-uglify');
+  const eslint = require('gulp-eslint');
 
   // *** config *** //
 
@@ -51,7 +50,7 @@
 
   gulp.task('default', () => {
     runSequence(
-      ['jshint'],
+      ['lint'],
       ['jscs'],
       ['lr'],
       ['nodemon'],
@@ -70,12 +69,12 @@
 
   // *** sub tasks ** //
 
-  gulp.task('jshint', () => {
+  gulp.task('lint', () => {
     return gulp.src(paths.scripts)
     .pipe(plumber())
-    .pipe(jshint({ esnext: true }))
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(jshint.reporter('fail'));
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError());
   });
 
   gulp.task('jscs', () => {
@@ -129,4 +128,4 @@
     .pipe(gulp.dest(path.join('src', 'client', 'js', 'dist')));
   });
 
-}());
+})();

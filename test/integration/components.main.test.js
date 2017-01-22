@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** set environment *** //
   process.env.NODE_ENV = 'test';
@@ -17,7 +15,7 @@
   describe('components : main', () => {
 
     beforeEach((done) => { done(); });
-    afterEach((done) => { done();});
+    afterEach((done) => { done(); });
 
     describe('GET /', () => {
       it('should render the main page', (done) => {
@@ -87,4 +85,4 @@
 
   });
 
-}());
+})();

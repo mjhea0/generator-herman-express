@@ -1,15 +1,12 @@
-(function(errorConfig) {
-
-  'use strict';
+((errorConfig) => {
 
   // *** error handling *** //
 
-  errorConfig.init = (app) => {
+  errorConfig.init = (app) => {       // eslint-disable-line no-param-reassign
 
     // print out stack for javascript exception
     process.on('uncaughtException', (err) => {
-      console.log('');
-      console.error(err.stack);
+      console.error(err);             // eslint-disable-line no-console
       process.exit();
     });
 
@@ -17,14 +14,14 @@
     app.use((req, res, next) => {
       const err = new Error('Not Found.');
       err.status = 404;
-      next(err);
+      return next(err);
     });
 
     // handle csrf errors specifically
-    app.use(function(err, req, res, next) {
+    app.use((err, req, res, next) => {
       if (err.code !== 'EBADCSRFTOKEN') return next(err);
-      res.status(403).json({
-        error: 'session has expired or tampered with'
+      return res.status(403).json({
+        error: 'session has expired or tampered with',
       });
     });
 
@@ -32,17 +29,16 @@
     if (app.get('env') === 'development') {
       app.use((err, req, res, next) => {
         if (!err) return next();
-        console.log(err);
+        console.log(err);         // eslint-disable-line no-console
         const status = err.status || 500;
         const message = {
-          status: status,
+          status,
           stack: err.stack,
           code: err.code,
           detail: err.message || err.err.message,
-          error: err.err ? err.err.message : err
+          error: err.err ? err.err.message : err,
         };
-        console.log(message.error);
-        res.status(status).send(message);
+        return res.status(status).send(message);
       });
     }
 
@@ -51,11 +47,11 @@
       if (!err) return next();
       const status = err.status || 500;
       const message = {
-        status: status,
+        status,
         code: err.code,
-        detail: err.message || err.err.message
+        detail: err.message || err.err.message,
       };
-      res.status(status).send(message);
+      return res.status(status).send(message);
     });
 
   };

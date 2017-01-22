@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** set environment *** //
   process.env.NODE_ENV = 'test';
@@ -65,4 +63,4 @@
 
   });
 
-}());
+})();

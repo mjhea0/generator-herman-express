@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** dependencies *** //
   const environment = process.env.NODE_ENV;
@@ -9,4 +7,4 @@
   // *** public *** //
   module.exports = require('knex')(config);
 
-}());
+})();

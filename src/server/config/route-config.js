@@ -1,8 +1,6 @@
-(function(routeConfig) {
+((routeConfig) => {
 
-  'use strict';
-
-  routeConfig.init = (app) => {
+  routeConfig.init = (app) => {   // eslint-disable-line no-param-reassign
 
     // *** routes *** //
     const routes = require('../routes');

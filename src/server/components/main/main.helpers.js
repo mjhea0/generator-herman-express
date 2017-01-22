@@ -1,6 +1,4 @@
-(function() {
-
-  'use strict';
+(() => {
 
   // *** helpers *** //
 
@@ -16,7 +14,7 @@
   }
 
   function sumSync(num1, num2) {
-    const total = parseInt(num1) + parseInt(num2);
+    const total = parseInt(num1, 10) + parseInt(num2, 10);
     if (isNaN(total)) {
       throw new Error('Something went wrong!');
     } else {
@@ -41,7 +39,7 @@
   module.exports = {
     sumSync,
     sumWithCallback,
-    sumWithPromise
+    sumWithPromise,
   };
 
-}());
+})();
