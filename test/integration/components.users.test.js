@@ -136,6 +136,46 @@
           });
         });
       });
+      it('should error if a username is not provided and the CSRF token is correct', (done) => {
+        chai.request(server)
+        .get('/users/login')
+        .end((err, res) => {
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/login')
+          .set('cookie', res.headers['set-cookie'])
+          .send({ _csrf: csrfToken, username: null, password: 'herman' })
+          .end((error, response) => {
+            should.exist(error);
+            response.status.should.eql(400);
+            response.type.should.eql('application/json');
+            response.body.message.should.eql('Validation failed');
+            response.body.failures[0].msg.should.eql(
+              'Username cannot be empty');
+            done();
+          });
+        });
+      });
+      it('should error if a password is not provided and the CSRF token is correct', (done) => {
+        chai.request(server)
+        .get('/users/login')
+        .end((err, res) => {
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/login')
+          .set('cookie', res.headers['set-cookie'])
+          .send({ _csrf: csrfToken, username: 'michael', password: null })
+          .end((error, response) => {
+            should.exist(error);
+            response.status.should.eql(400);
+            response.type.should.eql('application/json');
+            response.body.message.should.eql('Validation failed');
+            response.body.failures[0].msg.should.eql(
+              'Password cannot be empty');
+            done();
+          });
+        });
+      });
     });
 
     describe('GET /users/register', () => {
@@ -239,6 +279,46 @@
             response.redirects.length.should.eql(0);
             response.status.should.eql(403);
             response.body.error.should.eql('session has expired or tampered with');
+            done();
+          });
+        });
+      });
+      it('should error if a username is not provided and the CSRF token is correct', (done) => {
+        chai.request(server)
+        .get('/users/register')
+        .end((err, res) => {
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/register')
+          .set('cookie', res.headers['set-cookie'])
+          .send({ _csrf: csrfToken, username: null, password: 'herman' })
+          .end((error, response) => {
+            should.exist(error);
+            response.status.should.eql(400);
+            response.type.should.eql('application/json');
+            response.body.message.should.eql('Validation failed');
+            response.body.failures[0].msg.should.eql(
+              'Username cannot be empty');
+            done();
+          });
+        });
+      });
+      it('should error if a password is not provided and the CSRF token is correct', (done) => {
+        chai.request(server)
+        .get('/users/register')
+        .end((err, res) => {
+          const csrfToken = helpers.extractCsrfToken(res);
+          chai.request(server)
+          .post('/users/register')
+          .set('cookie', res.headers['set-cookie'])
+          .send({ _csrf: csrfToken, username: 'michael', password: null })
+          .end((error, response) => {
+            should.exist(error);
+            response.status.should.eql(400);
+            response.type.should.eql('application/json');
+            response.body.message.should.eql('Validation failed');
+            response.body.failures[0].msg.should.eql(
+              'Password cannot be empty');
             done();
           });
         });

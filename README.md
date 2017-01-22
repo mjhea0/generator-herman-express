@@ -14,6 +14,7 @@ Just a Node/Express boilerplate, featuring:
 1. Security
   - Helmet
   - CSRF
+1. Express Validator
 
 ## Test
 
@@ -54,7 +55,5 @@ Steps for setting up a new component:
 
 ## Todo
 
-1. https://github.com/realpython/members
-1. airbnb linter
-1. validatior
 1. update memory leak tests
+1. update readme (https://github.com/realpython/members)
