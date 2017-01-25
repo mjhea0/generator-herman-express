@@ -1,6 +1,6 @@
 {
   "name": "generator-herman-express",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Yeoman generator for a basic Node/Express app.",
   "homepage": "https://github.com/mjhea0/generator-herman-express",
   "author": {

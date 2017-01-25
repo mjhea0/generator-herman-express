@@ -2,13 +2,13 @@
 
   'use strict';
 
-  const yeoman = require('yeoman-generator');
+  const Generator = require('yeoman-generator');
   const chalk = require('chalk');
   const yosay = require('yosay');
   const fs = require('fs');
   const path = require('path');
 
-  module.exports = yeoman.Base.extend({
+  module.exports = Generator.extend({
     prompting: function() {
       this.log(yosay(
         'Welcome to the finest ' + chalk.red('Node+Express') + ' generator on the market!'
@@ -56,7 +56,7 @@
       );
       this.fs.copy(
         this.templatePath('.env-sample'),
-        this.destinationPath('.env-sample')
+        this.destinationPath('.env')
       );
       this.fs.copy(
         this.templatePath('_gitignore'),
@@ -73,10 +73,6 @@
       this.fs.copy(
         this.templatePath('.jshintrc'),
         this.destinationPath('.jshintrc')
-      );
-      this.fs.copy(
-        this.templatePath('.travis.yml'),
-        this.destinationPath('.travis.yml')
       );
       this.fs.copy(
         this.templatePath('gulpfile.js'),
