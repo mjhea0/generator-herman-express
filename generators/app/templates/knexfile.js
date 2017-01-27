@@ -1,4 +1,4 @@
-const databaseName = '<%- database %>';
+const databaseName = 'plato';
 
 module.exports = {
   development: {

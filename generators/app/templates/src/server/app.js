@@ -1,16 +1,21 @@
-// *** dependencies *** //
-const express = require('express');
+(() => {
 
-const appConfig = require('./config/main-config.js');
-const routeConfig = require('./config/route-config.js');
-const errorConfig = require('./config/error-config.js');
+  // *** dependencies *** //
+  const express = require('express');
 
-// *** express instance *** //
-const app = express();
+  const appConfig = require('./config/main-config.js');
+  const routeConfig = require('./config/route-config.js');
+  const errorConfig = require('./config/error-config.js');
 
-// *** config *** //
-appConfig.init(app, express);
-routeConfig.init(app);
-errorConfig.init(app);
+  // *** express instance *** //
+  const app = express();
 
-module.exports = app;
+  // *** config *** //
+  appConfig.init(app, express);
+  routeConfig.init(app);
+  errorConfig.init(app);
+
+  // *** public *** //
+  module.exports = app;
+
+})();

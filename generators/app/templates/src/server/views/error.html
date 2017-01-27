@@ -8,12 +8,9 @@
   <div class="row">
     <div class="col-md-12">
       <div>
-        {% if message %}
-          <h1>{{message}}</h1>
-        {% endif %}
-        {% if error.status %}
-          <h2>{{error.status}}</h2>
-        {% endif %}
+        <h1>{{status}}</h1>
+        <h2>{{code}}</h2>
+        <p>{{detail}}</p>
       </div>
     </div>
   </div>

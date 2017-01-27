@@ -1,23 +1,18 @@
-(function() {
+'use strict';
+var path = require('path');
+var assert = require('yeoman-assert');
+var helpers = require('yeoman-test');
 
-  'use strict';
-
-  const path = require('path');
-  const assert = require('yeoman-assert');
-  const helpers = require('yeoman-test');
-
-  describe('generator-herman-express:app', () => {
-    before(() => {
-      return helpers.run(path.join(__dirname, '../generators/app'))
+describe('generator-herman-express:app', function () {
+  before(function () {
+    return helpers.run(path.join(__dirname, '../generators/app'))
       .withPrompts({someAnswer: true})
       .toPromise();
-    });
-
-    it('creates files', () => {
-      assert.file([
-        'dummyfile.txt'
-      ]);
-    });
   });
 
-}());
+  it('creates files', function () {
+    assert.file([
+      'dummyfile.txt'
+    ]);
+  });
+});

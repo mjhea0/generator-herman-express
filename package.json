@@ -1,6 +1,6 @@
 {
   "name": "generator-herman-express",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Yeoman generator for a basic Node/Express app.",
   "homepage": "https://github.com/mjhea0/generator-herman-express",
   "author": {
@@ -17,23 +17,24 @@
     "yeoman-generator"
   ],
   "dependencies": {
-    "yeoman-generator": "^0.23.0",
-    "chalk": "^1.0.0",
-    "yosay": "^1.0.0"
+    "yeoman-generator": "^1.0.0",
+    "chalk": "^1.1.3",
+    "yosay": "^1.2.1"
   },
   "devDependencies": {
+    "yeoman-test": "^1.6.0",
+    "yeoman-assert": "^2.2.1",
     "eslint": "^3.1.1",
-    "eslint-config-xo-space": "^0.14.0",
-    "gulp": "^3.9.1",
-    "gulp-eslint": "^2.0.0",
+    "eslint-config-xo-space": "^0.15.0",
+    "gulp": "^3.9.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^1.0.0",
     "gulp-line-ending-corrector": "^1.0.1",
-    "gulp-mocha": "^2.0.0",
-    "gulp-nsp": "^2.1.0",
+    "gulp-istanbul": "^1.0.0",
+    "gulp-mocha": "^3.0.1",
     "gulp-plumber": "^1.0.0",
-    "yeoman-assert": "^2.0.0",
-    "yeoman-test": "^1.0.0"
+    "gulp-nsp": "^2.1.0",
+    "gulp-coveralls": "^0.1.0"
   },
   "eslintConfig": {
     "extends": "xo-space",
