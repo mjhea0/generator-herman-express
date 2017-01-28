@@ -4,7 +4,7 @@
 
 Just a Node/Express [Yeoman](http://yeoman.io) generator for a basic Node/Express boilerplate, featuring:
 
-1. A component-based structure ([example](./src/server/components/users))
+1. A component-based structure ([example](generators/app/templates/src/server/components/users))
 1. Server-side Templating via [Nunjucks](https://mozilla.github.io/nunjucks/)
 1. [Local Auth](src/server/auth/strategies/local.js) via [Passport](http://passportjs.org/)
 1. [Knex](http://knexjs.org/) query builder
