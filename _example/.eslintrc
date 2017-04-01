@@ -1,0 +1,30 @@
+{
+"globals": {
+    "esnext": true,
+    "jasmine": false,
+    "spyOn": false,
+    "it": false,
+    "console": false,
+    "describe": false,
+    "expect": false,
+    "before": false,
+    "after": false,
+    "beforeEach": false,
+    "afterEach": false,
+    "waits": false,
+    "waitsFor": false,
+    "runs": false,
+    "$": false,
+    "confirm": false
+  },
+  "env": {
+    "node": true,
+    "amd": true
+  },
+  "extends": "airbnb",
+  "rules": {
+    "global-require": 0,
+    "padded-blocks": 0,
+    "arrow-body-style": 0
+  }
+}
